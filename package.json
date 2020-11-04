@@ -1,12 +1,11 @@
 {
-  "name": "angular2-query-builder",
+  "name": "@benjitos/angular2-query-builder-context",
   "version": "0.6.2",
   "description": "A modernized Angular 2+ query builder based on jquery QueryBuilder",
   "main": "./dist/angular2-query-builder/bundles/angular2-query-builder.umd.js",
   "module": "./dist/angular2-query-builder/esm5/angular2-query-builder.js",
   "typings": "./dist/angular2-query-builder/angular2-query-builder.d.ts",
   "license": "MIT",
-  "private": false,
   "keywords": [
     "angular",
     "angular8",
@@ -17,17 +16,17 @@
     "visual"
   ],
   "author": {
-    "name": "Zeb Zhao",
-    "url": "https://github.com/zebzhao/"
+    "name": "ben",
+    "url": "https://github.com/benjitos/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/zebzhao/Angular-QueryBuilder"
+    "url": "https://github.com/benjitos/Angular-QueryBuilder"
   },
   "bugs": {
-    "url": "https://github.com/zebzhao/Angular-QueryBuilder/issues"
+    "url": "https://github.com/benjitos/Angular-QueryBuilder/issues"
   },
-  "homepage": "https://github.com/zebzhao/Angular-QueryBuilder#readme",
+  "homepage": "https://github.com/benjitos/Angular-QueryBuilder#readme",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -112,7 +112,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     boolean: ['=']
   };
   @Input() disabled: boolean;
-  @Input() data: RuleSet = { condition: 'and', rules: [] };
+  @Input() data: RuleSet = { condition: 'and', rules: [], conditionField: null };
 
   // For ControlValueAccessor interface
   public onChangeCallback: () => void;
@@ -138,7 +138,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   @Input() parentTouchedCallback: () => void;
   @Input() persistValueOnFieldChange: boolean = false;
 
-  @ViewChild('treeContainer', {static: true}) treeContainer: ElementRef;
+  @ViewChild('treeContainer', { static: true }) treeContainer: ElementRef;
 
   @ContentChild(QueryButtonGroupDirective) buttonGroupTemplate: QueryButtonGroupDirective;
   @ContentChild(QuerySwitchGroupDirective) switchGroupTemplate: QuerySwitchGroupDirective;
@@ -224,7 +224,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
   set value(value: RuleSet) {
     // When component is initialized without a formControl, null is passed to value
-    this.data = value || { condition: 'and', rules: [] };
+    this.data = value || { condition: 'and', rules: [], conditionField: null };
     this.handleDataChange();
   }
 
@@ -433,7 +433,7 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     if (this.config.addRuleSet) {
       this.config.addRuleSet(parent);
     } else {
-      parent.rules = parent.rules.concat([{ condition: 'and', rules: [] }]);
+      parent.rules = parent.rules.concat([{ condition: 'and', rules: [], conditionField: null }]);
     }
 
     this.handleTouched();
@@ -657,13 +657,15 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   getFieldContext(rule: Rule): FieldContext {
+    console.log('get Field Context this.parent ', this.value);
     if (!this.fieldContextCache.has(rule)) {
       this.fieldContextCache.set(rule, {
         onChange: this.changeField.bind(this),
         getFields: this.getFields.bind(this),
         getDisabledState: this.getDisabledState,
         fields: this.fields,
-        $implicit: rule
+        $implicit: rule,
+        context: (this.value && this.value.conditionField) ? this.value.conditionField : ''
       });
     }
     return this.fieldContextCache.get(rule);
