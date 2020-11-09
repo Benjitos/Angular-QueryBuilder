@@ -42,9 +42,15 @@ import { QueryBuilderClassNames, QueryBuilderConfig } from 'angular2-query-build
     <textarea class="output">{{query | json}}</textarea>
   </div>
   <br>
-  <h2>Custom Material</h2>
+
+
+
+  <h2>Custom Material 222  </h2>
   <br>
   <mat-card>
+
+   <pre> {{ query | json }} </pre>
+
   <query-builder [(ngModel)]='query' [config]='currentConfig' [allowRuleset]='allowRuleset' [allowCollapse]='allowCollapse' [persistValueOnFieldChange]='persistValueOnFieldChange'>
     <ng-container *queryButtonGroup="let ruleset; let addRule=addRule; let addRuleSet=addRuleSet; let removeRuleSet=removeRuleSet">
       <button type="button" mat-icon-button color="primary" (click)="addRule()">
@@ -62,12 +68,24 @@ import { QueryBuilderClassNames, QueryBuilderConfig } from 'angular2-query-build
         <mat-icon>remove</mat-icon>
       </button>
     </ng-container>
+
+    <!-- (ngModelChange)="onChange($event)" -->
     <ng-container *querySwitchGroup="let ruleset; let onChange=onChange">
       <mat-radio-group *ngIf="ruleset" [(ngModel)]="ruleset.condition" (ngModelChange)="onChange($event)">
         <mat-radio-button [style.padding.px]="10" value="and">And</mat-radio-button>
         <mat-radio-button [style.padding.px]="10" value="or">Or</mat-radio-button>
+        <mat-radio-button [style.padding.px]="10" value="eachElem"> Each Elem </mat-radio-button>
       </mat-radio-group>
+      <mat-form-field *ngIf="ruleset.condition === 'eachElem'" >
+          <mat-label>Array fields  </mat-label>
+          <mat-select [(ngModel)]="ruleset.conditionField">
+            <mat-option value=""></mat-option>
+            <mat-option value="test_1">  test 1  </mat-option>
+            <mat-option value="test_2">  test 2  </mat-option>
+          </mat-select>
+        </mat-form-field>
     </ng-container>
+
     <ng-container *queryEntity="let rule; let entities=entities; let onChange=onChange">
       <mat-form-field>
         <mat-select [(ngModel)]="rule.entity" (ngModelChange)="onChange($event, rule)">
@@ -77,8 +95,8 @@ import { QueryBuilderClassNames, QueryBuilderConfig } from 'angular2-query-build
         </mat-select>
       </mat-form-field>
     </ng-container>
-    <ng-container *queryField="let rule; let fields=fields; let onChange=onChange; let getFields = getFields">
-      <mat-form-field>
+    <ng-container *queryField="let rule; let fields=fields; let onChange=onChange; let getFields = getFields; let context=context;">
+      <mat-form-field [hintLabel]="'dans : ' + context" >
         <mat-select [(ngModel)]="rule.field" (ngModelChange)="onChange($event, rule)">
           <mat-option *ngFor="let field of getFields(rule.entity)" [value]="field.value">
             {{ field.name }}

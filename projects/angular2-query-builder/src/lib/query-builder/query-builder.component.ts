@@ -475,11 +475,12 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
     }
   }
 
-  changeCondition(value: string): void {
+  changeCondition(value: string, context?: string ): void {
+    // console.log( 'query-Builder.component.ts => change condition : ' ,  value, context );
     if (this.disabled) {
       return;
     }
-
+    this.data.conditionField = context;
     this.data.condition = value;
     this.handleTouched();
     this.handleDataChange();
@@ -657,17 +658,18 @@ export class QueryBuilderComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   getFieldContext(rule: Rule): FieldContext {
-    console.log('get Field Context this.parent ', this.value);
-    if (!this.fieldContextCache.has(rule)) {
-      this.fieldContextCache.set(rule, {
-        onChange: this.changeField.bind(this),
-        getFields: this.getFields.bind(this),
-        getDisabledState: this.getDisabledState,
-        fields: this.fields,
-        $implicit: rule,
-        context: (this.value && this.value.conditionField) ? this.value.conditionField : ''
-      });
-    }
+    // console.log('get Field Context this.parent ', this.value);
+    // if (!this.fieldContextCache.has(rule)) {
+    // console.log('reset cache field context ');
+    this.fieldContextCache.set(rule, {
+      onChange: this.changeField.bind(this),
+      getFields: this.getFields.bind(this),
+      getDisabledState: this.getDisabledState,
+      fields: this.fields,
+      $implicit: rule,
+      context: (this.value && this.value.conditionField) ? this.value.conditionField : ''
+    });
+    // }
     return this.fieldContextCache.get(rule);
   }
 
